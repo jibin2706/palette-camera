@@ -1,64 +1,28 @@
 import 'package:flutter/material.dart';
+import './home.dart';
 
 void main() => runApp(MyApp());
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var _primaryLight = Color(0xff016457);
+    var _secondaryLight = Color(0xffe1e1e1);
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Palette Camera',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+        primaryColor: _primaryLight,
+        appBarTheme: AppBarTheme(color: _secondaryLight, iconTheme: IconThemeData(color: _primaryLight)),
+          buttonTheme: ButtonThemeData(buttonColor: _primaryLight, textTheme: ButtonTextTheme.primary, ),
+          fontFamily: 'Fira Sans',
+          textTheme: TextTheme(
+              title: TextStyle(fontSize: 36.0, fontFamily: 'Sacramento', color: _primaryLight),
+              headline: TextStyle(fontSize: 50),
+              body1: TextStyle(fontSize: 18))),
+      home: Home(),
     );
   }
 }

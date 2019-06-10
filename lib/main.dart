@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: _primaryLight,
         appBarTheme: AppBarTheme(color: _secondaryLight, iconTheme: IconThemeData(color: _primaryLight)),
-          buttonTheme: ButtonThemeData(buttonColor: _primaryLight, textTheme: ButtonTextTheme.primary, ),
+          buttonTheme: ButtonThemeData(buttonColor: _primaryLight, textTheme: ButtonTextTheme.primary,),
           fontFamily: 'Fira Sans',
           textTheme: TextTheme(
               title: TextStyle(fontSize: 36.0, fontFamily: 'Sacramento', color: _primaryLight),

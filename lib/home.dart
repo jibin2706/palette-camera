@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import './dashboard.dart';
 import './favourite.dart';
@@ -36,7 +35,7 @@ class _HomeState extends State<Home> {
                   )),
               actions: <Widget>[
                 IconButton(
-                  icon: SvgPicture.asset("assets/icons/settings.svg"),
+                  icon: Icon(Icons.settings),
                   onPressed: () => {},
                 ),
               ],

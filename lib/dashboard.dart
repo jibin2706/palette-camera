@@ -28,28 +28,11 @@ class DashboardTab extends StatelessWidget {
 }
 
 class CameraImagePickerButton extends StatelessWidget {
-  pickImage(BuildContext context, ImageSource source) async {
-    var file = await ImagePicker.pickImage(source: source);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ImagePalette(
-              image: file,
-            ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => pickImage(context, ImageSource.camera),
-            ),
-          );
+          pickImage(context, ImageSource.camera);
         },
         padding: EdgeInsets.all(10),
         child: Container(
@@ -72,18 +55,6 @@ class CameraImagePickerButton extends StatelessWidget {
 }
 
 class GalleryImagePickerButton extends StatelessWidget {
-  pickImage(BuildContext context, ImageSource source) async {
-    var file = await ImagePicker.pickImage(source: source);
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ImagePalette(
-              image: file,
-            ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -102,15 +73,31 @@ class GalleryImagePickerButton extends StatelessWidget {
                   child: Icon(Icons.photo_library),
                 ),
                 Expanded(
-                    flex: 100,
-                    child: Center(
-                      child: Text("Open From Gallery"),
-                    ))
+                  flex: 100,
+                  child: Center(
+                    child: Text("Open From Gallery"),
+                  ),
+                )
               ],
             ),
           ),
         )
       ],
+    );
+  }
+}
+
+pickImage(BuildContext context, ImageSource source) async {
+  var file = await ImagePicker.pickImage(source: source);
+//    if picture is taken pass the image to next screen else do nothing
+  if (await file.exists()) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImagePalette(
+              image: file,
+            ),
+      ),
     );
   }
 }

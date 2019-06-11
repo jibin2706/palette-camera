@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
   flutter_svg: 0.12.4
   image_picker: ^0.4.10
+  palette_generator:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -66,3 +67,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"

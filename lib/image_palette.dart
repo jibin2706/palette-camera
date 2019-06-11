@@ -1,6 +1,11 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:palette_generator/palette_generator.dart';
+
+import 'components/swatches.dart';
 
 class ImagePalette extends StatefulWidget {
   final File image;
@@ -17,26 +22,42 @@ class _ImagePaletteState extends State<ImagePalette> {
     return MaterialApp(
       title: 'Palette Camera',
       home: Scaffold(
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
+        resizeToAvoidBottomPadding: false,
+        body: ListView(
+          scrollDirection: Axis.vertical,
           children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Container(
-                width: 1000,
-                child: Image.file(
-                  widget.image,
-                  fit: BoxFit.fill,
-                ),
-              ),
+            SizedBox(
+              height: 400,
+//              child: FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: widget.image.path),
+              child: Image.file(widget.image, fit: BoxFit.fitHeight,),
             ),
-            Expanded(
-              flex: 1,
-              child: Text('helloo'),
-            ),
+            FutureBuilder(
+                future: getPalette(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData)
+                    return Swatches(
+                      generator: snapshot.data,
+                    );
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }),
           ],
         ),
       ),
     );
+  }
+
+  getPalette() async {
+
+    var image = await load(widget.image.path);
+    return PaletteGenerator.fromImage(image);
+  }
+
+  Future<ui.Image> load(String asset) async {
+    ByteData data = await rootBundle.load(asset);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return fi.image;
   }
 }

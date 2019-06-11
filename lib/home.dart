@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             AppBar(
               centerTitle: true,
-              title: Text("Color Palette",
+              title: Text("Palette Camera",
                   style: TextStyle(
                     fontFamily: 'Sacramento',
                     fontSize: 36,

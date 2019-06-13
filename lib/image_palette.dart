@@ -28,8 +28,10 @@ class _ImagePaletteState extends State<ImagePalette> {
           children: <Widget>[
             SizedBox(
               height: 400,
-//              child: FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: widget.image.path),
-              child: Image.file(widget.image, fit: BoxFit.fitHeight,),
+              child: Image.file(
+                widget.image,
+                fit: BoxFit.cover,
+              ),
             ),
             FutureBuilder(
                 future: getPalette(),
@@ -39,7 +41,7 @@ class _ImagePaletteState extends State<ImagePalette> {
                       generator: snapshot.data,
                     );
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: LinearProgressIndicator(),
                   );
                 }),
           ],
@@ -49,7 +51,6 @@ class _ImagePaletteState extends State<ImagePalette> {
   }
 
   getPalette() async {
-
     var image = await load(widget.image.path);
     return PaletteGenerator.fromImage(image);
   }

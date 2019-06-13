@@ -88,7 +88,7 @@ class GalleryImagePickerButton extends StatelessWidget {
 }
 
 pickImage(BuildContext context, ImageSource source) async {
-  var file = await ImagePicker.pickImage(source: source);
+  var file = await ImagePicker.pickImage(source: source, maxHeight: 1980, maxWidth: 1020);
 //    if picture is taken pass the image to next screen else do nothing
   if (await file.exists()) {
     Navigator.push(

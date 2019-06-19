@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class Swatches extends StatelessWidget {
   const Swatches({this.generator});
@@ -61,18 +62,36 @@ class ColorBlock extends StatelessWidget {
 
     return Flex(
       direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              color: color,
-              height: 40.0,
-              width: MediaQuery.of(context).size.width-20,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            child: Center(
+              child: Text(
+                getHexFromColor(color),
+                style: TextStyle(
+                    color: getOppositeColor(color),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5),
+              ),
             ),
+            color: color,
+            height: 70.0,
+            width: MediaQuery.of(context).size.width - 20,
           ),
-        ],
-//      ),
+        ),
+      ],
     );
+  }
+
+  String getHexFromColor(Color color) {
+    return "#" + color.toString().substring(10, 16).toUpperCase();
+  }
+
+  Color getOppositeColor(Color color) {
+    if (TinyColor(color).isDark()) return Colors.white;
+    return Colors.black;
   }
 }

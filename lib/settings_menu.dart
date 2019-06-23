@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsMenu extends StatefulWidget {
   @override
@@ -6,9 +7,14 @@ class SettingsMenu extends StatefulWidget {
 }
 
 class _SettingsMenuState extends State<SettingsMenu> {
-  bool hex = false;
-  bool rgb = false;
-  bool hsl = false;
+  bool _rgbValue = false;
+  bool _hslValue = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadColorFormatSelection();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,32 +57,17 @@ class _SettingsMenuState extends State<SettingsMenu> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text("HEX"),
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                    Checkbox(
-                      value: hex,
-                      onChanged: (value) => setState(() {
-                            hex = value;
-                          }),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
                     Text("RGB"),
                     Expanded(
                       flex: 1,
                       child: Container(),
                     ),
                     Checkbox(
-                      value: rgb,
-                      onChanged: (value) => setState(() {
-                            rgb = value;
-                          }),
-                    ),
+                        value: _rgbValue,
+                        onChanged: (bool value) {
+                          _rgbValue = value;
+                          _updatedColorFormat("rgb", value);
+                        }),
                   ],
                 ),
                 Row(
@@ -87,10 +78,11 @@ class _SettingsMenuState extends State<SettingsMenu> {
                       child: Container(),
                     ),
                     Checkbox(
-                      value: hsl,
-                      onChanged: (value) => setState(() {
-                            hsl = value;
-                          }),
+                      value: _hslValue,
+                      onChanged: (bool value) {
+                        _hslValue = value;
+                        _updatedColorFormat("hsl", value);
+                      },
                     ),
                   ],
                 ),
@@ -116,5 +108,22 @@ class _SettingsMenuState extends State<SettingsMenu> {
         ],
       ),
     );
+  }
+
+//  Adding values to shared prefs
+  _updatedColorFormat(String colorFormat, bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool(colorFormat, value);
+    });
+  }
+
+//  Loading initial states of checkbox
+  _loadColorFormatSelection() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _rgbValue = (prefs.getBool('rgb')) ?? false;
+      _hslValue = (prefs.getBool('hsl')) ?? false;
+    });
   }
 }

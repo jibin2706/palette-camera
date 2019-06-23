@@ -20,17 +20,33 @@ class _ImagePaletteState extends State<ImagePalette> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Palette Camera',
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          elevation: 1000,
+          child: IconButton(
+            icon: Icon(Icons.favorite),
+            onPressed: () {},
+            color: Colors.white,
+          ),
+          onPressed: () {},
+        ),
         resizeToAvoidBottomPadding: false,
         body: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
-            SizedBox(
+            Container(
               height: 400,
-              child: Image.file(
-                widget.image,
-                fit: BoxFit.cover,
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Image.file(
+                    widget.image,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ],
               ),
             ),
             FutureBuilder(

@@ -5,13 +5,15 @@ class FavouriteTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Palette Camera',
-        home: Scaffold(
-            body: Center(
+      title: 'Palette Camera',
+      home: Scaffold(
+        body: Center(
           child: Text(
             "favourite page",
             style: Theme.of(context).textTheme.title,
           ),
-        )));
+        ),
+      ),
+    );
   }
 }

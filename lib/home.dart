@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import './dashboard.dart';
 import './favourite.dart';
+import './image_palette.dart';
+import './settings_menu.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -26,17 +29,20 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             AppBar(
               centerTitle: true,
-              title: Text("Palette Camera",
-                  style: TextStyle(
+              title: Text(
+                "Palette Camera",
+                style: TextStyle(
                     fontFamily: 'Sacramento',
                     fontSize: 36,
                     letterSpacing: 2,
-                    color: _primaryLight
-                  )),
+                    color: _primaryLight),
+              ),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.settings),
-                  onPressed: () => {},
+                  onPressed: () {
+                    _showSettings(context);
+                  },
                 ),
               ],
             ),
@@ -63,5 +69,32 @@ class _HomeState extends State<Home> {
     setState(() {
       _currentIndex = index;
     });
+    if (index == 0) {
+      pickImage(context, ImageSource.camera);
+    }
+  }
+
+  void _showSettings(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SettingsMenu();
+        });
+  }
+}
+
+pickImage(BuildContext context, ImageSource source) async {
+  var file = await ImagePicker.pickImage(
+      source: source, maxHeight: 1980, maxWidth: 1020);
+//    if picture is taken pass the image to next screen else do nothing
+  if (await file.exists()) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImagePalette(
+              image: file,
+            ),
+      ),
+    );
   }
 }
